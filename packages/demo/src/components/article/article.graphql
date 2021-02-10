@@ -1,0 +1,5 @@
+query article($slug: ID!) {
+  article(slug: $slug) @rest(type: Article, endpoint: "articles", path: "/{args.slug}/index.json") {
+    ...article
+  }
+}

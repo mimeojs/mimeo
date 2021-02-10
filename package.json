@@ -1,0 +1,8 @@
+{
+  "name": "mimeo-lab",
+  "workspaces": [
+    "packages/rx",
+    "packages/cli",
+    "packages/demo"
+  ]
+}

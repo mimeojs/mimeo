@@ -1,0 +1,17 @@
+overwrite: true
+schema:
+  - 'src/api/client.graphql'
+documents:
+  - 'src/**/*.graphql'
+  - '!src/api/client.graphql'
+generates:
+  src/api/graphql.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-document-nodes'
+    config:
+      gqlImport: '@apollo/client/core#gql'
+      documentMode: documentNode
+      nameSuffix: 'Document'
+      fragmentSuffix: 'Fragment'

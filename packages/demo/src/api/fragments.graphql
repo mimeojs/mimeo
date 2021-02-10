@@ -1,0 +1,6 @@
+fragment article on Article {
+  html
+  title
+  slug
+  published
+}

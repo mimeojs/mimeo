@@ -1,0 +1,10 @@
+extend type Query {
+  article(slug: ID!): Article
+}
+
+type Article {
+  html: String!
+  title: String
+  slug: ID!
+  published: String
+}

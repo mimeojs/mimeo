@@ -1,0 +1,61 @@
+{
+  "name": "@mimeojs/cli",
+  "version": "0.0.0",
+  "author": "Mikael Karon @mikaelkaron",
+  "bin": {
+    "mimeo": "./bin/run"
+  },
+  "bugs": "https://github.com/mimeojs/cli/issues",
+  "devDependencies": {
+    "@oclif/dev-cli": "^1.26.0",
+    "@types/binary-split": "^1.0.0",
+    "@types/node": "^14.14.25",
+    "rimraf": "^3.0.2",
+    "ts-node": "^9.1.1",
+    "tslib": "^2.1.0",
+    "typescript": "^4.1.3"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "/bin",
+    "/lib",
+    "/npm-shrinkwrap.json",
+    "/oclif.manifest.json"
+  ],
+  "homepage": "https://github.com/mikaelkaron/mimeojs-cli",
+  "keywords": [
+    "oclif"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "mimeo",
+    "plugins": [
+      "@oclif/plugin-help",
+      "@oclif/plugin-plugins"
+    ]
+  },
+  "repository": "mikaelkaron/mimeojs-cli",
+  "scripts": {
+    "build": "tsc -b",
+    "postpack": "rimraf oclif.manifest.json",
+    "prepack": "rimraf lib && npm run build && oclif-dev manifest && oclif-dev readme",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "version": "oclif-dev readme && git add README.md"
+  },
+  "types": "lib/index.d.ts",
+  "dependencies": {
+    "@mimeojs/rx": "file:..\\rx",
+    "@oclif/command": "^1.8.0",
+    "@oclif/config": "^1.17.0",
+    "@oclif/plugin-help": "^3.2.1",
+    "@oclif/plugin-plugins": "^1.9.5",
+    "binary-split": "^1.0.5",
+    "rxjs": "^6.6.3",
+    "rxjs-stream": "^3.2.1",
+    "vfile": "^4.2.1"
+  }
+}
