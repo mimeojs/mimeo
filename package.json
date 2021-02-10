@@ -1,5 +1,9 @@
 {
-  "name": "mimeo-lab",
+  "name": "mimeo",
+  "version": "0.0.0",
+  "description": "MimeoJS mono repo",
+  "author": "Mikael Karon <mikael@karon.se>",
+  "private": true,
   "workspaces": [
     "packages/rx",
     "packages/cli",
