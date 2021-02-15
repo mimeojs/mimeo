@@ -22,10 +22,12 @@ const writeVFile = async (vfile: VFile.VFile, options?: WriteFileOptions) => {
   }
   // parse directory
   const { dir } = parse(path);
-  // create directory
-  await mkdir(dir, {
-    recursive: true,
-  });
+  // create directory (if needed)
+  if (dir) {
+    await mkdir(dir, {
+      recursive: true,
+    });
+  }
   // write file
   await writeFile(path, contents, options);
   // return written path
