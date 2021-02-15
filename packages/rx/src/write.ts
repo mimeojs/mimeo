@@ -27,7 +27,7 @@ const writeVFile = async (vfile: VFile.VFile, options?: WriteFileOptions) => {
     recursive: true,
   });
   // write file
-  await writeFile(path, JSON.stringify({ data, contents }), options);
+  await writeFile(path, contents, options);
   // return written path
   return path;
 };
