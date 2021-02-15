@@ -22,10 +22,10 @@ const transformer = unified()
 
 export const transform = (processor = transformer) =>
   mergeMap<VFileCompatible, Promise<VFile>>(async (vfile) => {
-    // process to VFile
-    const processed = await processor.process(vfile);
+    // process VFile
+    const processed: Processed = await processor.process(vfile);
     // destruct from processed
-    const { data, contents: html }: Processed = processed;
+    const { data, contents: html } = processed;
     // set contents to stringified JSON
     processed.contents = JSON.stringify({ ...data, html });
     // return processed VFile
