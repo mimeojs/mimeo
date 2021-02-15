@@ -9,13 +9,14 @@ import unified from "unified";
 import { VFileCompatible } from "vfile";
 import { parse as yaml } from "yaml";
 
-const processor = unified()
+const transformer = unified()
   .use(frontmatter, ["yaml", "toml"])
   .use(extract, { yaml, toml, throws: true })
   .use(markdown)
   .use(markdown2html)
   .use(html);
 
+export const transform = (processor = transformer) =>
   mergeMap<VFileCompatible, Promise<VFileCompatible>>(async (vfile) => {
     // process to VFile
     const processed = await processor.process(vfile);
