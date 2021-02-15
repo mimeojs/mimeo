@@ -20,6 +20,10 @@ const transformer = unified()
   .use(markdown2html)
   .use(html);
 
+/**
+ * Transforms VFile using processor
+ * @param processor unified processor
+ */
 export const transform = (processor = transformer) =>
   mergeMap<VFileCompatible, Promise<VFile>>(async (vfile) => {
     // process VFile
