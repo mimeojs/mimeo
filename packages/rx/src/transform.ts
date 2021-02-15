@@ -9,6 +9,10 @@ import unified from "unified";
 import { VFile, VFileCompatible } from "vfile";
 import { parse as yaml } from "yaml";
 
+interface Processed extends VFile {
+  data: any;
+}
+
 const transformer = unified()
   .use(frontmatter, ["yaml", "toml"])
   .use(extract, { yaml, toml, throws: true })
@@ -21,9 +25,9 @@ export const transform = (processor = transformer) =>
     // process to VFile
     const processed = await processor.process(vfile);
     // destruct from processed
-    const { data, contents: html } = processed;
+    const { data, contents: html }: Processed = processed;
     // set contents to stringified JSON
-    processed.contents = JSON.stringify({ data, html });
+    processed.contents = JSON.stringify({ ...data, html });
     // return processed VFile
     return processed;
   });
