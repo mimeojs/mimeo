@@ -1,6 +1,1 @@
-{
-  "frontmatter": {
-    "title": "This is a second article"
-  },
-  "html": "<h1>second article</h1>\n<p>some</p>\n<p>more</p>\n<p>text</p>"
-}
+{"title":"This is a second article","html":"<h1>second article</h1>\n<p>some</p>\n<p>more</p>\n<p>text</p>"}
