@@ -2,7 +2,7 @@ import { BaseEncodingOptions, Mode, OpenMode } from "fs";
 import { mkdir, writeFile } from "fs/promises";
 import { parse } from "path";
 import { mergeMap } from "rxjs/operators";
-import VFile from "vfile";
+import { VFile } from "vfile";
 
 export type WriteFileOptions =
   | (BaseEncodingOptions & { mode?: Mode; flag?: OpenMode })
@@ -14,8 +14,8 @@ export type WriteFileOptions =
  * @param vfile VFile
  * @param options Write file options
  */
-const writeVFile = async (vfile: VFile.VFile, options?: WriteFileOptions) => {
-  const { path, contents, data } = vfile;
+const writeVFile = async (vfile: VFile, options?: WriteFileOptions) => {
+  const { path, contents } = vfile;
   // throw if we don't have a path prop
   if (!path) {
     vfile.fail("unable to write: no path present in vfile");
@@ -39,4 +39,4 @@ const writeVFile = async (vfile: VFile.VFile, options?: WriteFileOptions) => {
  * @param options Write file options
  */
 export const write = (options?: WriteFileOptions) =>
-  mergeMap<VFile.VFile, Promise<string>>((vfile) => writeVFile(vfile, options));
+  mergeMap<VFile, Promise<string>>((vfile) => writeVFile(vfile, options));

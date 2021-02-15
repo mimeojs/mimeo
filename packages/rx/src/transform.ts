@@ -6,7 +6,7 @@ import markdown2html from "remark-rehype";
 import { mergeMap } from "rxjs/operators";
 import { parse as toml } from "toml";
 import unified from "unified";
-import { VFileCompatible } from "vfile";
+import { VFile, VFileCompatible } from "vfile";
 import { parse as yaml } from "yaml";
 
 const transformer = unified()
@@ -17,7 +17,7 @@ const transformer = unified()
   .use(html);
 
 export const transform = (processor = transformer) =>
-  mergeMap<VFileCompatible, Promise<VFileCompatible>>(async (vfile) => {
+  mergeMap<VFileCompatible, Promise<VFile>>(async (vfile) => {
     // process to VFile
     const processed = await processor.process(vfile);
     // destruct from processed
