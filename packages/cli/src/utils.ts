@@ -12,7 +12,7 @@ export const win2posix = (input: string) =>
  * @param input JSON string
  * @returns parsed JSON or original value
  */
-export const toJSON = <T = any>(input: any): T => {
+export const parseJSON = <T = any>(input: any): T => {
   try {
     return JSON.parse(input);
   } catch {

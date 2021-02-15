@@ -5,21 +5,30 @@ import { Observable } from "rxjs";
 import { rxToStream, streamToStringRx } from "rxjs-stream";
 import { map } from "rxjs/operators";
 import VFile from "vfile";
-import { toJSON } from "../utils";
+import { parseJSON } from "../utils";
 
 export default class Rename extends Command {
-  static description = "renames vfiles";
-  static usage = "rename [...RENAME]";
+  static description =
+    "renames [JSON Lines](https://jsonlines.org/) vfiles piped on STDIN using the `vfile-rename` package";
+  static usage = "rename [...RENAME|-m MOVE]";
+  static examples = [
+    `cat vfiles.json | rename .txt`,
+    `cat vfiles.json | rename '{\\"dirname\\":\\"./content\\",\\"extname\\":\\".json\\"}'`,
+    `cat vfiles.json | rename -m "move.js"`,
+  ];
   static strict = false;
   static args = [
     {
       name: "rename",
       description: "rename instruction",
-      required: true,
     },
   ];
   static flags = {
     help: flags.help({ char: "h" }),
+    move: flags.string({
+      char: "m",
+      description: "module with default export move function",
+    }),
   };
 
   private input$!: Observable<string>;
@@ -27,7 +36,10 @@ export default class Rename extends Command {
 
   async init() {
     const { stdin } = process;
-    const { argv } = this.parse(Rename);
+    const {
+      argv,
+      flags: { move },
+    } = this.parse(Rename);
     // stdin is attached to a terminal
     if (stdin.isTTY) {
       // error if we are not piped
@@ -42,8 +54,8 @@ export default class Rename extends Command {
       // create observable from stdin
       this.input$ = streamToStringRx(stdin.pipe(split()));
     }
-    // parse renames
-    this.renames = argv.map(toJSON);
+    // import/parse renames
+    this.renames = move ? (await import(move)).default : argv.map(parseJSON);
   }
 
   async run() {

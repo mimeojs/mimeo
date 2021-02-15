@@ -42,7 +42,7 @@ USAGE
 * [`mimeo plugins:uninstall PLUGIN...`](#mimeo-pluginsuninstall-plugin)
 * [`mimeo plugins:update`](#mimeo-pluginsupdate)
 * [`mimeo read [...PATH]`](#mimeo-read-path)
-* [`mimeo rename`](#mimeo-rename)
+* [`mimeo rename [...RENAME|-m MOVE]`](#mimeo-rename-rename-m-move)
 * [`mimeo transform`](#mimeo-transform)
 * [`mimeo write`](#mimeo-write)
 
@@ -61,7 +61,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.1/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
 
 ## `mimeo list [...PATTERN]`
 
@@ -214,16 +214,25 @@ OPTIONS
 
 _See code: [src/commands/read.ts](https://github.com/mikaelkaron/mimeojs-cli/blob/v0.0.0/src/commands/read.ts)_
 
-## `mimeo rename`
+## `mimeo rename [...RENAME|-m MOVE]`
 
-renames vfiles
+renames [JSON Lines](https://jsonlines.org/) vfiles piped on STDIN using the `vfile-rename` package
 
 ```
 USAGE
-  $ mimeo rename
+  $ mimeo rename [...RENAME|-m MOVE]
+
+ARGUMENTS
+  RENAME  rename instruction
 
 OPTIONS
-  -h, --help  show CLI help
+  -h, --help       show CLI help
+  -m, --move=move  module with default export move function
+
+EXAMPLES
+  cat vfiles.json | rename .txt
+  cat vfiles.json | rename '{\"dirname\":\"./content\",\"extname\":\".json\"}'
+  cat vfiles.json | rename -m "move.js"
 ```
 
 _See code: [src/commands/rename.ts](https://github.com/mikaelkaron/mimeojs-cli/blob/v0.0.0/src/commands/rename.ts)_
