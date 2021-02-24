@@ -1,4 +1,4 @@
-import { write } from "@mimeojs/rx";
+import { ast } from "@mimeojs/rx";
 import { Command, flags } from "@oclif/command";
 import split from "binary-split";
 import { Observable } from "rxjs";
@@ -6,8 +6,8 @@ import { rxToStream, streamToStringRx } from "rxjs-stream";
 import { map } from "rxjs/operators";
 import VFile from "vfile";
 
-export default class Write extends Command {
-  static description = "writes files to vfile";
+export default class Markdown2Html extends Command {
+  static description = "transforms markdown vfiles to html vfiles";
   static flags = {
     help: flags.help({ char: "h" }),
   };
@@ -38,10 +38,12 @@ export default class Write extends Command {
       this.input$.pipe(
         // deserialize to VFile
         map((text) => VFile(JSON.parse(text))),
-        // write files
-        write(),
-        // add newline to each path
-        map((path) => `${path}\n`)
+        // transform vfile
+        ast.markdown2Html(),
+        // serialize vfile
+        map((vfile) => JSON.stringify(vfile)),
+        // add newline to each json
+        map((json) => `${json}\n`)
       ),
       undefined,
       (err) =>

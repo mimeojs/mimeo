@@ -9,10 +9,6 @@ import unified from "unified";
 import { VFile, VFileCompatible } from "vfile";
 import { parse as yaml } from "yaml";
 
-interface Processed extends VFile {
-  data: any;
-}
-
 const transformer = unified()
   .use(frontmatter, ["yaml", "toml"])
   .use(extract, { yaml, toml, throws: true })
@@ -24,14 +20,7 @@ const transformer = unified()
  * Transforms VFile using processor
  * @param processor unified processor
  */
-export const transform = (processor = transformer) =>
-  mergeMap<VFileCompatible, Promise<VFile>>(async (vfile) => {
-    // process VFile
-    const processed: Processed = await processor.process(vfile);
-    // destruct from processed
-    const { data, contents: html } = processed;
-    // set contents to stringified JSON
-    processed.contents = JSON.stringify({ ...data, html });
-    // return processed VFile
-    return processed;
-  });
+export const markdown2Html = (processor = transformer) =>
+  mergeMap<VFileCompatible, Promise<VFile>>(async (vfile) =>
+    processor.process(vfile)
+  );

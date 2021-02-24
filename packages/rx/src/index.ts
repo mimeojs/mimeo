@@ -1,5 +1,3 @@
-export * from "./list";
-export * from "./read";
-export * from "./rename";
-export * from "./transform";
-export * from "./write";
+export * as fs from "./fs";
+export * as ast from "./ast";
+export * as vfile from "./vfile";

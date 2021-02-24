@@ -1,4 +1,4 @@
-import { read } from "@mimeojs/rx";
+import { fs } from "@mimeojs/rx";
 import { Command, flags } from "@oclif/command";
 import split from "binary-split";
 import { from, Observable } from "rxjs";
@@ -62,7 +62,7 @@ export default class Read extends Command {
     rxToStream(
       this.input$.pipe(
         // list files
-        read(),
+        fs.read(),
         // serialize vfile
         map((vfile) => {
           const contents = String(vfile.contents);

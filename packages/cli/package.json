@@ -31,6 +31,17 @@
   "main": "lib/index.js",
   "oclif": {
     "commands": "./lib/commands",
+    "topics": {
+      "fs": {
+        "description": "file system related commands"
+      },
+      "ast": {
+        "description": "AST related commands"
+      },
+      "vfile": {
+        "description": "VFile releated commands"
+      }
+    },
     "bin": "mimeo",
     "plugins": [
       "@oclif/plugin-help",

@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "MimeoJS Reactive eXtensions operators",
   "main": "lib/index.js",
+  "files": [
+    "/lib"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc -b"

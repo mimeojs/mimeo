@@ -1,10 +1,10 @@
-import { list } from "@mimeojs/rx";
+import { fs } from "@mimeojs/rx";
 import { Command, flags } from "@oclif/command";
 import split from "binary-split";
 import { from, Observable } from "rxjs";
 import { rxToStream, streamToStringRx } from "rxjs-stream";
 import { map } from "rxjs/operators";
-import { win2posix } from "../utils";
+import { win2posix } from "../../utils";
 
 export default class List extends Command {
   static description = "lists files matching a glob pattern";
@@ -69,7 +69,7 @@ export default class List extends Command {
         // make sure patterns are posix
         map(win2posix),
         // list files
-        list(),
+        fs.list(),
         // add newline to each path
         map((path) => `${path}\n`)
       ),
