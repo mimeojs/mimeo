@@ -1,1 +1,1 @@
-{"title":"The first article is here","published":"2001-01-01","html":"<h1>The first article</h1>\n<p>this is the first!!!</p>\n<p><img src=\"../../icon/icon.png\" alt=\"alt text\"></p>\n<p>and a link to the <a href=\"../2/\">second</a></p>"}
+{"matter":{"title":"The first article is here","published":"2001-01-01T00:00:00.000Z"},"html":"<h1>The first article</h1>\n<p>this is the first!!!</p>\n<p><img src=\"../../icon/icon.png\" alt=\"alt text\"></p>\n<p>and a link to the <a href=\"../2/\">second</a></p>"}

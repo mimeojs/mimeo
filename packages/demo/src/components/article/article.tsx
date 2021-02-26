@@ -45,7 +45,7 @@ export class MimeoArticle implements ComponentInterface {
       return <div class="error">{error}</div>;
     }
     if (article) {
-      return [<Header title={article.title} />, <article innerHTML={article.html} />];
+      return [<Header title={article.matter.title} />, <article innerHTML={article.html} />];
     }
     return <span>loading</span>;
   }

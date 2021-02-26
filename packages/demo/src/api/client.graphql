@@ -2,9 +2,13 @@ extend type Query {
   article(slug: ID!): Article
 }
 
-type Article {
-  html: String!
+type ArticleMatter {
   title: String
-  slug: ID!
   published: String
+}
+
+type Article {
+  slug: ID!
+  html: String!
+  matter: ArticleMatter
 }
