@@ -1,0 +1,3 @@
+[submodule ".\\packages\\vfile-matter"]
+	path = .\\packages\\vfile-matter
+	url = https://github.com/mikaelkaron/vfile-matter.git

@@ -20,15 +20,12 @@
   "dependencies": {
     "globby": "^11.0.2",
     "rehype-stringify": "^8.0.0",
-    "remark-extract-frontmatter": "^3.1.0",
-    "remark-frontmatter": "^3.0.0",
     "remark-parse": "^9.0.0",
     "remark-rehype": "^8.0.0",
     "rxjs": "^6.6.3",
-    "toml": "^3.0.0",
     "unified": "^9.2.0",
     "vfile": "^4.2.1",
-    "vfile-rename": "^1.1.0",
-    "yaml": "^1.10.0"
+    "vfile-matter": "file:..\\vfile-matter",
+    "vfile-rename": "^1.1.0"
   }
 }
