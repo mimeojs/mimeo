@@ -40,10 +40,8 @@ export default class Markdown2Html extends Command {
         map((text) => VFile(JSON.parse(text))),
         // transform vfile
         ast.markdown2Html(),
-        // serialize vfile
-        map((vfile) => JSON.stringify(vfile)),
-        // add newline to each json
-        map((json) => `${json}\n`)
+        // serialize vfile and add newline
+        map((vfile) => `${JSON.stringify(vfile)}\n`)
       ),
       undefined,
       (err) =>

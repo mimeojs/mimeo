@@ -66,10 +66,8 @@ export default class Rename extends Command {
         map((text) => VFile(JSON.parse(text))),
         // rename files
         vfile.rename(this.renames),
-        // serialize vfile
-        map((vfile) => JSON.stringify(vfile)),
-        // add newline to each json
-        map((json) => `${json}\n`)
+        // serialize vfile and add newline
+        map((vfile) => `${JSON.stringify(vfile)}\n`)
       ),
       undefined,
       (err) =>

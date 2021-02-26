@@ -63,13 +63,14 @@ export default class Read extends Command {
       this.input$.pipe(
         // list files
         fs.read(),
-        // serialize vfile
-        map((vfile) => {
-          const contents = String(vfile.contents);
-          return JSON.stringify({ ...vfile, contents });
-        }),
-        // add newline to each json
-        map((json) => `${json}\n`)
+        // serialize vfile and add newline
+        map(
+          (vfile) =>
+            `${JSON.stringify({
+              ...vfile,
+              contents: String(vfile.contents),
+            })}\n`
+        )
       ),
       undefined,
       (err) =>
