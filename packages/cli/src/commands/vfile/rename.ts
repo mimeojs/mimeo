@@ -9,7 +9,7 @@ import { parseJSON } from "../../utils";
 
 export default class Rename extends Command {
   static description =
-    "renames [JSON Lines](https://jsonlines.org/) vfiles piped on STDIN using the `vfile-rename` package";
+    "renames vfiles piped on STDIN using the `vfile-rename` package";
   static usage = "rename [...RENAME|-m MOVE]";
   static examples = [
     `cat vfiles.json | rename .txt`,

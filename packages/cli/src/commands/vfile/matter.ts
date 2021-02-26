@@ -8,7 +8,7 @@ import VFile from "vfile";
 
 export default class Matter extends Command {
   static description =
-    "extracts frontmatter from [JSON Lines](https://jsonlines.org/) vfiles piped on STDIN using the `vfile-matter` package";
+    "extracts frontmatter from vfiles piped on STDIN using the `vfile-matter` package";
   static flags = {
     help: flags.help({ char: "h" }),
     strip: flags.boolean({
