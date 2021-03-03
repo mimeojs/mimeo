@@ -1,3 +1,6 @@
 [submodule "packages/stencil-router"]
 	path = packages/stencil-router
 	url = https://github.com/mimeojs/stencil-router.git
+[submodule "packages/stencil-helmet"]
+	path = packages/stencil-helmet
+	url = https://github.com/mimeojs/stencil-helmet.git
