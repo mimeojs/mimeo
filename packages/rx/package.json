@@ -25,7 +25,7 @@
     "rxjs": "^6.6.3",
     "unified": "^9.2.0",
     "vfile": "^4.2.1",
-    "vfile-matter": "file:..\\vfile-matter",
+    "vfile-matter": "^2.1.0",
     "vfile-rename": "^1.1.0"
   }
 }

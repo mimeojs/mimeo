@@ -1,6 +1,3 @@
-[submodule "packages/vfile-matter"]
-	path = packages/vfile-matter
-	url = https://github.com/mikaelkaron/vfile-matter.git
 [submodule "packages/stencil-router"]
 	path = packages/stencil-router
 	url = https://github.com/mimeojs/stencil-router.git
