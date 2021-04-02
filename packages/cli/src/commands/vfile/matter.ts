@@ -1,10 +1,8 @@
 import { vfile } from "@mimeojs/rx";
 import { Command, flags } from "@oclif/command";
-import split from "binary-split";
+import { parse, stringify } from "ndjson";
 import { Observable } from "rxjs";
-import { rxToStream, streamToStringRx } from "rxjs-stream";
-import { map } from "rxjs/operators";
-import VFile from "vfile";
+import { rxToStream, streamToRx } from "rxjs-stream";
 
 export default class Matter extends Command {
   static description =
@@ -38,7 +36,7 @@ export default class Matter extends Command {
     // stdin is piped
     else {
       // create observable from stdin
-      this.input$ = streamToStringRx(stdin.pipe(split()));
+      this.input$ = streamToRx(stdin.pipe(parse()));
     }
     // create options
     this.options = { strip };
@@ -49,19 +47,19 @@ export default class Matter extends Command {
     rxToStream(
       this.input$.pipe(
         // deserialize to VFile
-        map((text) => VFile(JSON.parse(text))),
+        vfile.create(),
         // extract frontmatter files
-        vfile.matter(this.options),
-        // serialize vfile and add newline
-        map((vfile) => `${JSON.stringify(vfile)}\n`)
+        vfile.matter(this.options)
       ),
-      undefined,
+      { objectMode: true },
       (err) =>
         this.error(err, {
           code: "RUN",
           exit: 1,
         })
     )
+      // stringify JSON
+      .pipe(stringify())
       // pipe to stdout
       .pipe(process.stdout);
   }

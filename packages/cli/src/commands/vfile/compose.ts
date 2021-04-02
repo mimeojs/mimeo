@@ -1,10 +1,8 @@
 import { vfile } from "@mimeojs/rx";
 import { Command, flags } from "@oclif/command";
-import split from "binary-split";
+import { parse, stringify } from "ndjson";
 import { Observable } from "rxjs";
-import { rxToStream, streamToStringRx } from "rxjs-stream";
-import { map } from "rxjs/operators";
-import VFile from "vfile";
+import { rxToStream, streamToRx } from "rxjs-stream";
 
 export default class Compose extends Command {
   static description = "composes vfiles piped on STDIN";
@@ -27,8 +25,8 @@ export default class Compose extends Command {
     }
     // stdin is piped
     else {
-      // create observable from stdin
-      this.input$ = streamToStringRx(stdin.pipe(split()));
+      // create observable from parsed stdin
+      this.input$ = streamToRx(stdin.pipe(parse()));
     }
   }
 
@@ -37,19 +35,19 @@ export default class Compose extends Command {
     rxToStream(
       this.input$.pipe(
         // deserialize to VFile
-        map((text) => VFile(JSON.parse(text))),
+        vfile.create(),
         // serialize files
-        vfile.compose(),
-        // serialize vfile and add newline
-        map((vfile) => `${JSON.stringify(vfile)}\n`)
+        vfile.compose()
       ),
-      undefined,
+      { objectMode: true },
       (err) =>
         this.error(err, {
           code: "RUN",
           exit: 1,
         })
     )
+      // stringify JSON
+      .pipe(stringify())
       // pipe to stdout
       .pipe(process.stdout);
   }

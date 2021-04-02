@@ -13,13 +13,11 @@ export type ReadFileOptions =
  * @param path Path to file
  * @param options Read file options
  */
-const readVFile = async (path: string, options?: ReadFileOptions) => {
-  const contents = await readFile(path, options);
-  return VFile({
+const readVFile = async (path: string, options?: ReadFileOptions) =>
+  VFile({
     path,
-    contents,
+    contents: await readFile(path, options),
   });
-};
 
 /**
  * Reads vfile from disk

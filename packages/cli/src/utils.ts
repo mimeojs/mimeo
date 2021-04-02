@@ -1,3 +1,7 @@
+import { EOL } from "os";
+import { DuplexOptions } from "stream";
+import through from "through2";
+
 const WIN32_SEPARATOR_RE = /\\/g;
 
 /**
@@ -19,3 +23,11 @@ export const parseJSON = <T = any>(input: any): T => {
     return input;
   }
 };
+
+/**
+ * Transform stream that adds EOL (end of line) betweeen objects
+ * @param opts Duplex stream options
+ * @returns Transform stream
+ */
+export const newLine = (opts?: DuplexOptions) =>
+  through(opts, (data, _enc, cb) => cb(null, `${data}${EOL}`));

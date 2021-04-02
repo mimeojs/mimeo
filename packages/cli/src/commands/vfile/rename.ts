@@ -1,10 +1,8 @@
 import { vfile } from "@mimeojs/rx";
 import { Command, flags } from "@oclif/command";
-import split from "binary-split";
+import { parse, stringify } from "ndjson";
 import { Observable } from "rxjs";
-import { rxToStream, streamToStringRx } from "rxjs-stream";
-import { map } from "rxjs/operators";
-import VFile from "vfile";
+import { rxToStream, streamToRx } from "rxjs-stream";
 import { parseJSON } from "../../utils";
 
 export default class Rename extends Command {
@@ -52,7 +50,7 @@ export default class Rename extends Command {
     // stdin is piped
     else {
       // create observable from stdin
-      this.input$ = streamToStringRx(stdin.pipe(split()));
+      this.input$ = streamToRx(stdin.pipe(parse()));
     }
     // import/parse renames
     this.renames = move ? (await import(move)).default : argv.map(parseJSON);
@@ -63,19 +61,19 @@ export default class Rename extends Command {
     rxToStream(
       this.input$.pipe(
         // deserialize to VFile
-        map((text) => VFile(JSON.parse(text))),
+        vfile.create(),
         // rename files
-        vfile.rename(this.renames),
-        // serialize vfile and add newline
-        map((vfile) => `${JSON.stringify(vfile)}\n`)
+        vfile.rename(this.renames)
       ),
-      undefined,
+      { objectMode: true },
       (err) =>
         this.error(err, {
           code: "RUN",
           exit: 1,
         })
     )
+      // stringify JSON
+      .pipe(stringify())
       // pipe to stdout
       .pipe(process.stdout);
   }

@@ -1,10 +1,8 @@
-import { fs } from "@mimeojs/rx";
+import { fs, vfile } from "@mimeojs/rx";
 import { Command, flags } from "@oclif/command";
-import split from "binary-split";
+import { parse, stringify } from "ndjson";
 import { Observable } from "rxjs";
-import { rxToStream, streamToStringRx } from "rxjs-stream";
-import { map } from "rxjs/operators";
-import VFile from "vfile";
+import { rxToStream, streamToRx } from "rxjs-stream";
 
 export default class Write extends Command {
   static description = "writes files to vfile";
@@ -28,7 +26,7 @@ export default class Write extends Command {
     // stdin is piped
     else {
       // create observable from stdin
-      this.input$ = streamToStringRx(stdin.pipe(split()));
+      this.input$ = streamToRx(stdin.pipe(parse()));
     }
   }
 
@@ -37,19 +35,19 @@ export default class Write extends Command {
     rxToStream(
       this.input$.pipe(
         // deserialize to VFile
-        map((text) => VFile(JSON.parse(text))),
+        vfile.create(),
         // write files
-        fs.write(),
-        // add newline to each path
-        map((path) => `${path}\n`)
+        fs.write()
       ),
-      undefined,
+      { objectMode: true },
       (err) =>
         this.error(err, {
           code: "RUN",
           exit: 1,
         })
     )
+      // stringify JSON
+      .pipe(stringify())
       // pipe to stdout
       .pipe(process.stdout);
   }
